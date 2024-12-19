@@ -5,12 +5,15 @@ import it.unimi.dsi.fastutil.ints.IntList;
 import legend.core.GameEngine;
 import legend.game.inventory.Equipment;
 import legend.game.inventory.Item;
+import legend.game.modding.coremod.CoreMod;
 import legend.lodmod.LodMod;
 import org.legendofdragoon.modloader.registries.RegistryId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static legend.core.GameEngine.CONFIG;
 
 public class GameState52c {
   public String campaignName;
@@ -123,5 +126,13 @@ public class GameState52c {
     for(final RegistryId id : this.itemRegistryIds_2e9) {
       this.items_2e9.add(GameEngine.REGISTRIES.items.getEntry(id).get());
     }
+  }
+
+  // TODO: Account for new party member with empty slot available. Add option for max auto-fill.
+  public void setCharIds_88(final int val, final int index) {
+    if(CONFIG.getConfig(CoreMod.PERMANENT_PARTY_CONFIG.get())) {
+      return;
+    }
+    this.charIds_88[index] = val;
   }
 }

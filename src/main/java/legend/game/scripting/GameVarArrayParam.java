@@ -66,7 +66,7 @@ public class GameVarArrayParam extends Param {
   public Param set(final int val) {
     switch(this.varIndex) {
       case 6 -> Scus94491BpeSegment_800b.gameState_800babc8.scriptData_08[this.arrIndex] = val;
-      case 17 -> Scus94491BpeSegment_800b.gameState_800babc8.charIds_88[this.arrIndex] = val;
+      case 17 -> Scus94491BpeSegment_800b.gameState_800babc8.setCharIds_88(val, this.arrIndex);
       case 32 -> Scus94491BpeSegment_8006.battleState_8006e398.allBents_e0c[this.arrIndex] = SCRIPTS.getState(val, BattleEntity27c.class);
       case 34 -> Scus94491BpeSegment_8006.battleState_8006e398.playerBents_e40[this.arrIndex] = SCRIPTS.getState(val, PlayerBattleEntity.class);
       case 36 -> Scus94491BpeSegment_8006.battleState_8006e398.monsterBents_e50[this.arrIndex] = SCRIPTS.getState(val, MonsterBattleEntity.class);

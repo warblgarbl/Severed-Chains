@@ -4,9 +4,12 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import legend.game.inventory.Equipment;
 import org.legendofdragoon.modloader.registries.RegistryId;
+import legend.game.modding.coremod.CoreMod;
 
 import java.util.EnumMap;
 import java.util.Map;
+
+import static legend.core.GameEngine.CONFIG;
 
 public class CharacterData2c {
   public int xp_00;
@@ -51,5 +54,20 @@ public class CharacterData2c {
     this.selectedAddition_19 = other.selectedAddition_19;
     System.arraycopy(other.additionLevels_1a, 0, this.additionLevels_1a, 0, this.additionLevels_1a.length);
     System.arraycopy(other.additionXp_22, 0, this.additionXp_22, 0, this.additionXp_22.length);
+  }
+
+  public void setPartyFlags_04(final int val) {
+    int inParty = val & 0x1;
+    int available = val & 0x2;
+    final int required = val & 0x20;
+    final int finalAddition = val & 0x40;
+    if(CONFIG.getConfig(CoreMod.PERMANENT_PARTY_CONFIG.get())) {
+      inParty = inParty > 0 ? 0x1 : this.partyFlags_04 & 0x1;
+      available = available > 0 ? 0x2 : this.partyFlags_04 & 0x2;
+
+      this.partyFlags_04 = inParty | available | required | finalAddition;
+      return;
+    }
+    this.partyFlags_04 = val;
   }
 }
