@@ -3,6 +3,7 @@ package legend.game.types;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import legend.game.inventory.Equipment;
+import legend.game.scripting.PartyFlagCategory;
 import org.legendofdragoon.modloader.registries.RegistryId;
 import legend.game.modding.coremod.CoreMod;
 
@@ -58,16 +59,27 @@ public class CharacterData2c {
 
   public void setPartyFlags_04(final int val) {
     int inParty = val & 0x1;
-    int available = val & 0x2;
-    final int required = val & 0x20;
+    int canFight = val & 0x2;
+    int previouslyJoined = val & 0x4;
+    final int mustFight = val & 0x20;
     final int finalAddition = val & 0x40;
-    if(CONFIG.getConfig(CoreMod.PERMANENT_PARTY_CONFIG.get())) {
-      inParty = inParty > 0 ? 0x1 : this.partyFlags_04 & 0x1;
-      available = available > 0 ? 0x2 : this.partyFlags_04 & 0x2;
+    final PartyFlagCategory flagConfig = CONFIG.getConfig(CoreMod.PARTY_FLAG_MODE_CONFIG.get());
 
-      this.partyFlags_04 = inParty | available | required | finalAddition;
-      return;
+    switch(flagConfig) {
+      case PartyFlagCategory.BFF -> {
+        inParty = inParty > 0 ? 0x1 : this.partyFlags_04 & 0x1;
+        canFight = canFight > 0 ? 0x2 : this.partyFlags_04 & 0x2;
+      }
+      case PartyFlagCategory.FULL -> {
+        inParty = 0x1;
+        canFight = 0x2;
+      }
     }
-    this.partyFlags_04 = val;
+
+    if(inParty == 0 && (this.partyFlags_04 & 0x2) > 0) {
+      previouslyJoined = 0x4;
+    }
+
+    this.partyFlags_04 = inParty | canFight | previouslyJoined | mustFight | finalAddition;
   }
 }

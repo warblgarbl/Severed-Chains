@@ -6,6 +6,7 @@ import legend.core.GameEngine;
 import legend.game.inventory.Equipment;
 import legend.game.inventory.Item;
 import legend.game.modding.coremod.CoreMod;
+import legend.game.scripting.ActivePartyCategory;
 import legend.lodmod.LodMod;
 import org.legendofdragoon.modloader.registries.RegistryId;
 
@@ -128,11 +129,17 @@ public class GameState52c {
     }
   }
 
-  // TODO: Account for new party member with empty slot available. Add option for max auto-fill.
   public void setCharIds_88(final int val, final int index) {
-    if(CONFIG.getConfig(CoreMod.PERMANENT_PARTY_CONFIG.get())) {
+    final int partyFillCap = CONFIG.getConfig(CoreMod.ACTIVE_PARTY_FILL_CONFIG.get());
+    final ActivePartyCategory partyConfig = CONFIG.getConfig(CoreMod.ACTIVE_PARTY_CONFIG.get());
+
+    if(partyConfig == ActivePartyCategory.LOCK || (this.charIds_88[index] == -1 && index > partyFillCap)) {
       return;
     }
+    if(partyConfig == ActivePartyCategory.RETAIL_LEADER && index != 0 && this.charIds_88[index] != -1) {
+      return;
+    }
+
     this.charIds_88[index] = val;
   }
 }
