@@ -1,0 +1,16 @@
+Widescreen patch: Flag triggers Lisa's entrance in File 2
+Old: Toggle-on after camera pan
+New: Toggle-on before camera pan. Toggle-off after camera pan.
+--- original
++++ modified
+@@ -735,8 +735,9 @@
+ call 257, stor[24], stor[25]
+ mov 0xa, stor[24]
+ mov 0x1, stor[26]
+-gosub inl[:LABEL_54]
+ call 2, 0x8, 0x1
++gosub inl[:LABEL_54]
++call 2, 0x8, 0x0
+ mov 0x9, stor[24]
+ mov 0x1, stor[25]
+ gosub inl[:LABEL_16]
