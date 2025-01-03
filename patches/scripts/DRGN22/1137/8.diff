@@ -50,14 +50,14 @@ New: No model swapping. New animation routine for Libria to be on-screen with Li
 # Wait for flag - Lisa exit
 +mov 0x35, stor[21]
 +mov 1, stor[22]
-+gosub inl[:FOCUS_WAIT]
++gosub inl[:FLAG_WAIT_FOCUS]
 # Compare distance with Libria's retail start and wait
-+mov inl[:S0_START_X], stor[26]
-+mov inl[:S0_START_Y], stor[27]
-+mov inl[:S0_START_Z], stor[28]
-+mov inl[:S0_MARK_X], stor[29]
-+mov inl[:S0_MARK_Y], stor[30]
-+mov inl[:S0_MARK_Z], stor[31]
++mov inl[:S0_MARK_X], stor[26]
++mov inl[:S0_MARK_Y], stor[27]
++mov inl[:S0_MARK_Z], stor[28]
++mov inl[:S0_START_X], stor[29]
++mov inl[:S0_START_Y], stor[30]
++mov inl[:S0_START_Z], stor[31]
 +mov 2, stor[24]
 +gosub inl[:GET_MOVE_TICKS]
 +mov stor[31], stor[22]
@@ -162,14 +162,14 @@ New: No model swapping. New animation routine for Libria to be on-screen with Li
 +call 99, 1
 +mov 0xc, stor[21]
 +mov 1, stor[22]
-+gosub inl[:FOCUS_WAIT]
++gosub inl[:FLAG_WAIT_FOCUS]
 # Compare distance with Libria's retail start and wait
-+mov inl[:S1_START_X], stor[26]
-+mov inl[:S1_START_Y], stor[27]
-+mov inl[:S1_START_Z], stor[28]
-+mov inl[:S1_MARK_X], stor[29]
-+mov inl[:S1_MARK_Y], stor[30]
-+mov inl[:S1_MARK_Z], stor[31]
++mov inl[:S1_MARK_X], stor[26]
++mov inl[:S1_MARK_Y], stor[27]
++mov inl[:S1_MARK_Z], stor[28]
++mov inl[:S1_START_X], stor[29]
++mov inl[:S1_START_Y], stor[30]
++mov inl[:S1_START_Z], stor[31]
 +mov 2, stor[24]
 +gosub inl[:GET_MOVE_TICKS]
 +mov stor[31], stor[22]
@@ -250,13 +250,13 @@ New: No model swapping. New animation routine for Libria to be on-screen with Li
 +jmp_cmp ==, stor[22], stor[23], inl[:RETURN]
 +yield
 +jmp inl[:FLAG_WAIT]
-+FOCUS_WAIT:
++FLAG_WAIT_FOCUS:
 +call 3, stor[21], stor[23]
 +jmp_cmp ==, stor[22], stor[23], inl[:RETURN]
 +yield
 +call 102, stor[25], stor[26], stor[27], stor[28]
 +call 105, stor[26], stor[27], stor[28]
-+jmp inl[:FOCUS_WAIT]
++jmp inl[:FLAG_WAIT_FOCUS]
 +MOVE:
 +call 102, stor[0], stor[29], stor[30], stor[31]
 +sub stor[26], stor[29]
@@ -310,10 +310,10 @@ New: No model swapping. New animation routine for Libria to be on-screen with Li
 +ANIMATION:
 +call 99, 0
 +call 97, stor[20]
-+FINISH_ANIMATION:
++ANIMATION_WAIT:
 +yield
 +call 100, stor[23]
-+jmp_cmp ==, stor[23], 0, inl[:FINISH_ANIMATION]
++jmp_cmp ==, stor[23], 0, inl[:ANIMATION_WAIT]
 +jmp_cmp ==, stor[22], 0xffffffff, inl[:FREEZE]
 +call 97, stor[22]
 +return
