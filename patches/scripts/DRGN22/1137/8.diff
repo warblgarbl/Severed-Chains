@@ -204,7 +204,7 @@ New: No model swapping. New animation routine for Libria to be on-screen with Li
 +mov 16, stor[24]
 +gosub inl[:ROTATE]
 # Set flag - File 2 starts textbox
-+call 2, 8, 1
++call 2, 0x62, 1
 # Queue animation(s)
 +mov 5, stor[20]
 +mov 0xffffffff, stor[22]
