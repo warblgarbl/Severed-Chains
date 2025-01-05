@@ -21,6 +21,10 @@ import legend.game.modding.coremod.config.IndicatorModeConfigEntry;
 import legend.game.modding.coremod.config.InventorySizeConfigEntry;
 import legend.game.modding.coremod.config.MashModeConfigEntry;
 import legend.game.modding.coremod.config.MonitorConfigEntry;
+import legend.game.modding.coremod.config.MusicEffectsOverTimeGranularityConfigEntry;
+import legend.game.modding.coremod.config.MusicInterpolationPrecisionConfigEntry;
+import legend.game.modding.coremod.config.MusicPitchResolutionConfigEntry;
+import legend.game.modding.coremod.config.MusicSampleRateConfigEntry;
 import legend.game.modding.coremod.config.MusicVolumeConfigEntry;
 import legend.game.modding.coremod.config.DisableMouseInputConfigEntry;
 import legend.game.modding.coremod.config.ResolutionConfig;
@@ -65,6 +69,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_W;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_Z;
+import static org.lwjgl.glfw.GLFW.GLFW_MOD_ALT;
 
 /** Core mod that contains engine-level content. Game can not run without it. */
 @Mod(id = CoreMod.MOD_ID)
@@ -89,9 +94,15 @@ public class CoreMod {
 
   public static final RegistryDelegate<AudioDeviceConfig> AUDIO_DEVICE_CONFIG = CONFIG_REGISTRAR.register("audio_device", AudioDeviceConfig::new);
   public static final RegistryDelegate<MusicVolumeConfigEntry> MUSIC_VOLUME_CONFIG = CONFIG_REGISTRAR.register("music_volume", MusicVolumeConfigEntry::new);
+  public static final RegistryDelegate<MusicInterpolationPrecisionConfigEntry> MUSIC_INTERPOLATION_PRECISION_CONFIG = CONFIG_REGISTRAR.register("music_interpolation_precision", MusicInterpolationPrecisionConfigEntry::new);
+  public static final RegistryDelegate<MusicPitchResolutionConfigEntry> MUSIC_PITCH_RESOLUTION_CONFIG = CONFIG_REGISTRAR.register("music_pitch_resolution", MusicPitchResolutionConfigEntry::new);
+  public static final RegistryDelegate<MusicSampleRateConfigEntry> MUSIC_SAMPLE_RATE_CONFIG = CONFIG_REGISTRAR.register("music_sample_rate", MusicSampleRateConfigEntry::new);
+  public static final RegistryDelegate<MusicEffectsOverTimeGranularityConfigEntry> MUSIC_EFFECTS_OVER_TIME_GRANULARITY_CONFIG = CONFIG_REGISTRAR.register("music_effects_over_time_granularity", MusicEffectsOverTimeGranularityConfigEntry::new);
 
   /** Config isn't actually used, but adds a button to the options screen to open the keybinds screen */
   public static final RegistryDelegate<ConfigEntry<Void>> CONTROLLER_KEYBINDS_CONFIG = CONFIG_REGISTRAR.register("controller_keybinds", ControllerKeybindsConfigEntry::new);
+
+  public static final int ALT_ENTER_KEY = (GLFW_MOD_ALT << 9) | GLFW_KEY_ENTER;
 
   public static final Map<InputAction, RegistryDelegate<ControllerKeybindConfigEntry>> KEYBIND_CONFIGS = new EnumMap<>(InputAction.class);
   static {
@@ -123,6 +134,7 @@ public class CoreMod {
     KEYBIND_CONFIGS.put(InputAction.FRAME_ADVANCE, CONFIG_REGISTRAR.register("keybind_frame_advance", () -> new ControllerKeybindConfigEntry(false, GLFW_KEY_F9)));
     KEYBIND_CONFIGS.put(InputAction.FRAME_ADVANCE_HOLD, CONFIG_REGISTRAR.register("keybind_frame_advance_hold", () -> new ControllerKeybindConfigEntry(false, GLFW_KEY_F10)));
     KEYBIND_CONFIGS.put(InputAction.KILL_STUCK_SOUNDS, CONFIG_REGISTRAR.register("keybind_kill_stuck_sounds", () -> new ControllerKeybindConfigEntry(false, GLFW_KEY_F4)));
+    KEYBIND_CONFIGS.put(InputAction.TOGGLE_FULL_SCREEN, CONFIG_REGISTRAR.register("keybind_toggle_full_screen", () -> new ControllerKeybindConfigEntry(false, ALT_ENTER_KEY)));
   }
 
   // Per-campaign config
