@@ -1,3 +1,4 @@
+Widescreen patch
 Evening guards in Twin Castle hide themselves when off-screen in retail, producing a flicker in widescreen.
 Patch keeps them always on.
 --- original
