@@ -4,11 +4,11 @@ Old: Hides knight based on camera offset.
 New: Always show, never hide.
 --- original
 +++ modified
-@@ -32,6 +32,6 @@
- call 678, var[64][8], 0x1
- jmp inl[:LABEL_1]
- LABEL_4:
--call 106, 0x1
-+call 106, 0
- call 678, var[64][8], 0x0
- jmp inl[:LABEL_1]
+@@ -16,7 +16,6 @@
+ LABEL_1:
+ yield
+ call 257, stor[24], stor[25]
+-jmp_cmp <, 0x5, stor[25], inl[:LABEL_4]
+ jmp_cmp >, 0xfffffff3, stor[24], inl[:LABEL_3]
+ jmp inl[:LABEL_2]
+ LABEL_2:
