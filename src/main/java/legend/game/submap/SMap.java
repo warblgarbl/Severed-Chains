@@ -43,6 +43,7 @@ import legend.game.types.AnimatedSprite08;
 import legend.game.types.AnmFile;
 import legend.game.types.AnmSpriteGroup;
 import legend.game.types.AnmSpriteMetrics14;
+import legend.game.types.BackgroundType;
 import legend.game.types.CContainer;
 import legend.game.types.CharacterData2c;
 import legend.game.types.GsF_LIGHT;
@@ -53,7 +54,6 @@ import legend.game.types.SmallerStruct;
 import legend.game.types.Textbox4c;
 import legend.game.types.TextboxChar08;
 import legend.game.types.TextboxText84;
-import legend.game.types.BackgroundType;
 import legend.game.types.TmdAnimationFile;
 import legend.game.types.Translucency;
 import legend.game.unpacker.Loader;
@@ -535,13 +535,8 @@ public class SMap extends EngineState {
   }
 
   @Override
-  public boolean allowsWidescreen() {
-    return false;
-  }
-
-  @Override
-  public boolean allowsHighQualityProjection() {
-    return false;
+  public RenderMode getRenderMode() {
+    return RenderMode.LEGACY;
   }
 
   @ScriptDescription("Adds a textbox to a submap object")
@@ -913,6 +908,7 @@ public class SMap extends EngineState {
     RENDERER
       .queueModel(modelPart.obj, lw, QueuedModelTmd.class)
       .screenspaceOffset(GPU.getOffsetX() + GTE.getScreenOffsetX() - 184, GPU.getOffsetY() + GTE.getScreenOffsetY() - 120)
+      .depthOffset(shadowModel_800bda10.zOffset_a0 * 4)
       .lightDirection(lightDirectionMatrix_800c34e8)
       .lightColour(lightColourMatrix_800c3508)
       .backgroundColour(GTE.backgroundColour);
@@ -943,7 +939,7 @@ public class SMap extends EngineState {
 
           final QueuedModelTmd queue = RENDERER.queueModel(dobj2.obj, lw, QueuedModelTmd.class)
             .screenspaceOffset(GPU.getOffsetX() + GTE.getScreenOffsetX() - 184, GPU.getOffsetY() + GTE.getScreenOffsetY() - 120)
-            .depthOffset(model.zOffset_a0)
+            .depthOffset(model.zOffset_a0 * 4)
             .lightDirection(lightDirectionMatrix_800c34e8)
             .lightColour(lightColourMatrix_800c3508)
             .backgroundColour(GTE.backgroundColour)
